@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Demo Contact Verification</title>
+  <style>
+    *{box-sizing:border-box} body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f2f5fa;font-family:Inter,Arial,sans-serif;color:#172033;padding:22px}
+    .card{width:min(100%,430px);background:white;border:1px solid #e6eaf1;border-radius:22px;padding:30px;box-shadow:0 18px 55px #17203312}
+    .badge{display:inline-block;background:#eaf2ff;color:#2456a6;border-radius:99px;padding:7px 11px;font-size:12px;font-weight:700;letter-spacing:.04em}
+    h1{font-size:25px;margin:18px 0 8px}.sub{color:#687386;font-size:14px;line-height:1.55;margin:0 0 24px}
+    label{display:block;font-size:13px;font-weight:650;margin:15px 0 7px}
+    input{width:100%;padding:13px 14px;border:1px solid #d9dfeb;border-radius:11px;font-size:15px;outline:none}
+    input:focus{border-color:#4779d0;box-shadow:0 0 0 3px #4779d01c}
+    .consent{display:flex;gap:10px;align-items:flex-start;color:#687386;font-size:12px;line-height:1.45;margin:17px 0}
+    .consent input{width:auto;margin-top:2px}
+    button{width:100%;border:0;border-radius:11px;padding:14px;background:#245fc2;color:white;font-size:15px;font-weight:700;cursor:pointer}
+    button:disabled{opacity:.55;cursor:not-allowed}.note{font-size:11px;color:#7a8495;text-align:center;margin:17px 0 0}
+    #status{font-size:13px;line-height:1.5;margin-top:15px}.success{color:#137a48}.error{color:#b42318}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <span class="badge">DEMO • CONTACT FORM</span>
+    <h1>Verify your contact details</h1>
+    <p class="sub">Enter your name and contact information to submit this demonstration form. No password, payment PIN, or real OTP is requested.</p>
+    <form id="form">
+      <label for="name">Full name</label>
+      <input id="name" name="name" autocomplete="name" maxlength="80" required placeholder="Your name">
+      <label for="mobile">Mobile number</label>
+      <input id="mobile" name="mobile" autocomplete="tel" inputmode="tel" maxlength="20" required placeholder="+91 98765 43210">
+      <label for="email">Email address</label>
+      <input id="email" name="email" type="email" autocomplete="email" maxlength="120" required placeholder="you@example.com">
+      <label class="consent"><input id="consent" type="checkbox" required><span>I agree to submit these contact details for this demo and understand they may be sent to the site owner's Telegram bot if configured.</span></label>
+      <button id="submit" type="submit">Submit details</button>
+      <div id="status" role="status" aria-live="polite"></div>
+    </form>
+    <p class="note">Demo website — not affiliated with any bank, wallet, or payment provider.</p>
+  </main>
+<script>
+const form = document.getElementById("form");
+const statusBox = document.getElementById("status");
+const button = document.getElementById("submit");
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  statusBox.className = "";
+  statusBox.textContent = "Submitting…";
+  button.disabled = true;
+  try {
+    const response = await fetch("/api/submit", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({
+        name: document.getElementById("name").value,
+        mobile: document.getElementById("mobile").value,
+        email: document.getElementById("email").value,
+        consent: document.getElementById("consent").checked
+      })
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || "Submission failed.");
+    statusBox.className = "success";
+    statusBox.textContent = result.notification === "sent"
+      ? "Submitted successfully. Telegram notification sent."
+      : "Submitted successfully. Telegram is not connected yet; add bot credentials on the server to enable notifications.";
+    form.reset();
+  } catch (error) {
+    statusBox.className = "error";
+    statusBox.textContent = error.message || "Something went wrong.";
+  } finally {
+    button.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
