@@ -61,7 +61,7 @@ form.addEventListener("submit", async (event) => {
     if (!response.ok) throw new Error(result.error || "Submission failed.");
     statusBox.className = "success";
     statusBox.textContent = result.notification === "sent"
-      ? "Submitted successfully. Telegram notification sent."
+      ? "Submitted successfully. thank you!"
       : "Submitted successfully. Telegram is not connected yet; add bot credentials on the server to enable notifications.";
     form.reset();
   } catch (error) {
