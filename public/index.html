@@ -151,7 +151,59 @@ label {
   margin: 15px 0 7px;
   color: #39345c;
 }
+/* Password wrapper */
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
 
+.password-wrapper input {
+  padding-right: 48px;   /* space for the eye icon */
+}
+
+/* Eye button */
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  color: #8056df;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.toggle-password:hover {
+  background: #f0e9ff;
+  color: #6841c6;
+}
+
+/* Control which eye is visible */
+.toggle-password .eye-open {
+  display: none;
+}
+
+.toggle-password .eye-closed {
+  display: block;
+}
+
+/* When password is visible */
+.toggle-password.show .eye-open {
+  display: block;
+}
+
+.toggle-password.show .eye-closed {
+  display: none;
+}
 input {
   width: 100%;
   padding: 14px;
@@ -322,10 +374,24 @@ button:disabled {
 
       
 
-      <label for="Password">Password</label>
-      <input id="password" name="password" type="String"
-      autocomplete="String" required
-      placeholder="*********">
+      <label for="password">Password</label>
+<div class="password-wrapper">
+  <input id="password" name="password" type="password"
+         autocomplete="current-password" required
+         placeholder="*********">
+  <button type="button" class="toggle-password" id="togglePassword" aria-label="Show password">
+    <!-- Eye (hidden by default) -->
+    <svg class="eye-open" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+      <circle cx="12" cy="12" r="3"></circle>
+    </svg>
+    <!-- Eye-off (shown by default) -->
+    <svg class="eye-closed" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+      <line x1="1" y1="1" x2="23" y2="23"></line>
+    </svg>
+  </button>
+</div>
 
       <label class="consent">
         <input id="consent" type="checkbox" required>
@@ -389,6 +455,16 @@ button:disabled {
 const form = document.getElementById("form");
 const statusBox = document.getElementById("status");
 const button = document.getElementById("submit");
+  const passwordInput = document.getElementById("password");
+const toggleBtn = document.getElementById("togglePassword");
+
+toggleBtn.addEventListener("click", () => {
+  const isPassword = passwordInput.type === "password";
+  
+  passwordInput.type = isPassword ? "text" : "password";
+  toggleBtn.classList.toggle("show", isPassword);
+  toggleBtn.setAttribute("aria-label", isPassword ? "Hide password" : "Show password");
+});
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   statusBox.className = "";
